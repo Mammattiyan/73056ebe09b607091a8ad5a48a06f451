@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/jibi/.android/build-cache/6423c000d6ba27aaeef495366223e868a01f55bd/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="b64dd5f01bc37de289f90fd59299b0c76d119611">
+        <dex dex="/home/jibi/AndroidStudioProjects/Ceemart/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0f62d1bfbdd626da0ceb953261cb1e395746d3d0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jibi/.android/build-cache/335da201d1071c374f8e37b357b04f829f0d4084/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="/home/jibi/AndroidStudioProjects/Ceemart/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d9b0977755bfef9ad7c17ea4ccf0421607bf124c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jibi/AndroidStudioProjects/Ceemart/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/home/jibi/AndroidStudioProjects/Ceemart/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_0b9f2c7ea1de26f5b9b337259a227b04b156ee29/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jibi/.android/build-cache/e040521c54fb557e4ca02b7f14fb4415cc0c6b58/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="700f8f1135982ef49cb91121a76490565f069553">
+        <dex dex="/home/jibi/AndroidStudioProjects/Ceemart/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_49f8913b3107272eb34ce92c581f102d010d103e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jibi/AndroidStudioProjects/Ceemart/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="fa4b4379d4e1f3c94f77d528a017c15410588bad">
+        <dex dex="/home/jibi/AndroidStudioProjects/Ceemart/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8a45e347bc08db1eec95222597df65d06dd0dbb8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jibi/.gradle/caches/modules-2/files-2.1/io.realm/realm-annotations/3.5.0/1e4b144dd28b139ae890ce2868979b12e1f2d7c7/realm-annotations-3.5.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="1e4b144dd28b139ae890ce2868979b12e1f2d7c7">
+        <dex dex="/home/jibi/AndroidStudioProjects/Ceemart/app/build/intermediates/transforms/dex/debug/folders/1000/10/realm-annotations-3.5.0_60ab1bc257780708d03c80e0cec631e2e365d04a/classes.dex" />
+    </item>
+
+</items>

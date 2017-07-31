@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "275435313923",
+    "firebase_url": "https://beaconmainproject.firebaseio.com",
+    "project_id": "beaconmainproject",
+    "storage_bucket": "beaconmainproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275435313923:android:9a328c139e2e5b34",
+        "android_client_info": {
+          "package_name": "ceemart.beacon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275435313923-19ka3ve382gal6hf9hi31qm5rdj1rheo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuNGDNQwrBoTnGCuZQKYB0uzwqN6uwPiU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
