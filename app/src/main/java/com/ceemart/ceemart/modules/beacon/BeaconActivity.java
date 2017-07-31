@@ -1,11 +1,11 @@
-package com.ceemart.ceemart.Modules.Signup.Beacon;
+package com.ceemart.ceemart.modules.beacon;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.ceemart.ceemart.R;
 
-public class Beacon extends AppCompatActivity {
+public class BeaconActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

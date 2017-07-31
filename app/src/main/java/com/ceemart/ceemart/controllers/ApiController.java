@@ -1,9 +1,7 @@
 package com.ceemart.ceemart.controllers;
 
 
-import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 
@@ -12,7 +10,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.ceemart.ceemart.Config.Api;
+import com.ceemart.ceemart.config.Api;
 import com.ceemart.ceemart.MainActivity;
 
 import org.json.JSONException;
@@ -33,25 +31,16 @@ public class ApiController {
      *
      * @retun json data
      */
-    public JSONObject signUp(final Context context) throws JSONException {
+    public JSONObject signUp(JSONObject postData, final Context context, final MainActivity.VolleyCallback callback) throws JSONException {
         Toast.makeText(context, "This is my Toast message!",
                 Toast.LENGTH_LONG).show();
-        JSONObject postData = new JSONObject();
-        postData.put("device_id", "7878");
-        postData.put("application_key", "5J!FYs#H%J#RHbN4*g6-tqZ9hb#%Mx4&");
-        postData.put("application_source", "ANDROID");
-        postData.put("version", "1.0");
-        postData.put("longitude", "89");
-        postData.put("latitude", "90.9");
-        postData.put("current_time", "10am");
-        postData.put("client_id", "12");
-        postData.put("push_token", "thuis");
+
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Api.SIGNUP, postData, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 apiRsponse = response;
-
+                callback.onSuccessResponse(response);
             }
 
         }, new Response.ErrorListener() {
@@ -78,14 +67,7 @@ public class ApiController {
                 5000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-
-        // Adding request to request queue
         ApplicationController.getInstance().addToRequestQueue(jsonObjReq);
-        Toast.makeText(context, "cc" + apiRsponse.toString(),
-                Toast.LENGTH_LONG).show();
         return apiRsponse;
     }
-
-
 }
