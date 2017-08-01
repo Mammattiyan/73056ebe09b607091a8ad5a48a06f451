@@ -31,12 +31,12 @@ public class ApiController {
      *
      * @retun json data
      */
-    public JSONObject signUp(JSONObject postData, final Context context, final MainActivity.VolleyCallback callback) throws JSONException {
+    public JSONObject signUp(final JSONObject apiData, final Context context, final MainActivity.VolleyCallback callback) throws JSONException {
         Toast.makeText(context, "This is my Toast message!",
                 Toast.LENGTH_LONG).show();
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Api.SIGNUP, postData, new Response.Listener<JSONObject>() {
+                Api.SIGNUP, apiData, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 apiRsponse = response;
@@ -47,19 +47,56 @@ public class ApiController {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, String.valueOf(error.networkResponse.statusCode),
-                        Toast.LENGTH_LONG).show();
                 if (String.valueOf(error.networkResponse.statusCode).equals("401")) {
-
+                    Toast.makeText(context, "You are not an authorized person", Toast.LENGTH_SHORT).show();
                 }
                 if (String.valueOf(error.networkResponse.statusCode).equals("500")) {
                     Toast.makeText(context, "Internal Server Error", Toast.LENGTH_SHORT).show();
-
                 }
-
                 if (String.valueOf(error.networkResponse.statusCode).equals("400")) {
                     Toast.makeText(context, "You are not an authorized person", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        ApplicationController.getInstance().addToRequestQueue(jsonObjReq);
+        return apiRsponse;
+    }
 
+    /* function apiRequest
+     * request to api and get response
+     *
+     * @param apiUrl,requestData
+     *
+     * @retun json data
+     */
+    public JSONObject apiRequest(String apiUrl, final Context context, final MainActivity.VolleyCallback callback) throws JSONException {
+        Toast.makeText(context, "This is my Toast message!",
+                Toast.LENGTH_LONG).show();
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                apiUrl, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                apiRsponse = response;
+                callback.onSuccessResponse(response);
+            }
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (String.valueOf(error.networkResponse.statusCode).equals("401")) {
+                    Toast.makeText(context, "You are not an authorized person", Toast.LENGTH_SHORT).show();
+                }
+                if (String.valueOf(error.networkResponse.statusCode).equals("500")) {
+                    Toast.makeText(context, "Internal Server Error", Toast.LENGTH_SHORT).show();
+                }
+                if (String.valueOf(error.networkResponse.statusCode).equals("400")) {
+                    Toast.makeText(context, "You are not an authorized person", Toast.LENGTH_SHORT).show();
                 }
             }
         });

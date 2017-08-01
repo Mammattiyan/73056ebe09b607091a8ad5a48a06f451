@@ -7,7 +7,7 @@ import org.json.JSONObject;
 public class MainActivity extends Activity {
 
     public interface VolleyCallback {
-        void onSuccessResponse(JSONObject result);
+        boolean onSuccessResponse(JSONObject result);
 
     }
 }
