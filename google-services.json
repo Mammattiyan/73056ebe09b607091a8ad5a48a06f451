@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "715624289279",
+    "firebase_url": "https://ceemart-92d9a.firebaseio.com",
+    "project_id": "ceemart-92d9a",
+    "storage_bucket": "ceemart-92d9a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715624289279:android:bfc3c29eb3412c02",
+        "android_client_info": {
+          "package_name": "com.ceemart.ceemart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715624289279-89totntvh444m70llb97sm4u1jdiq2vu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ceemart.ceemart",
+            "certificate_hash": "07235d8f420ee20444dad6c28bbd1fc5d2b5e15e"
+          }
+        },
+        {
+          "client_id": "715624289279-ffdar0t4mkmmuaa9ftbrpsm3q7re58fu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcn0W4X5hAn7lzMg1kd1MbvPDe-95LcDA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715624289279-ffdar0t4mkmmuaa9ftbrpsm3q7re58fu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
