@@ -28,10 +28,14 @@ public class Api {
      */
     public static final String BEACON_TAG_LIST = BASE_URL + "/beacontaglist?access_key=";
 
- /*
+    /*
      *  beacon display list api url
      */
     public static final String BEACON_DISPLAY_LIST = BASE_URL + "/beacondisplaylist2?access_key=";
+    /*
+     *  beacon display list api url
+     */
+    public static final String UPDATES = BASE_URL + "/update1?access_key=";
 
 
 }
