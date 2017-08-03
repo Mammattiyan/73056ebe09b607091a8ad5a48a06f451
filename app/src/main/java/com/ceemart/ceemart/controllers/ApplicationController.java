@@ -9,6 +9,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -60,5 +66,33 @@ public class ApplicationController extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
+    }
+
+
+    /* function getDateTime
+    * get current date and time
+    *
+    *  @param :null
+    *
+    *  @retun :current date and time
+    */
+
+    public String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+    /* function serializeJsonArray
+    * convert json array to comma separated value
+    *
+    *  @param :jsonArray
+    *
+    *  @retun :comma separated values
+    */
+
+    public String serializeJsonArray(JSONArray jsonArray) {
+        String jsonString = String.valueOf(jsonArray);
+        return jsonString.substring(1, jsonString.length() - 1);
     }
 }

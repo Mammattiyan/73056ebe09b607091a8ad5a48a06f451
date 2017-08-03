@@ -1,5 +1,6 @@
 package com.ceemart.ceemart.modules.signup;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import com.ceemart.ceemart.MainActivity;
 import com.ceemart.ceemart.R;
 import com.ceemart.ceemart.controllers.ApiController;
 
-import com.ceemart.ceemart.controllers.InitialSyncingController;
+import com.ceemart.ceemart.controllers.ApplicationController;
+import com.ceemart.ceemart.controllers.SyncingController;
 
+import com.ceemart.ceemart.controllers.SessionController;
 import com.ceemart.ceemart.models.UserDetailsModel;
 
 
@@ -23,9 +26,6 @@ import java.util.Collections;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
 
 public class SignupActivity extends AppCompatActivity
 
@@ -34,6 +34,8 @@ public class SignupActivity extends AppCompatActivity
     Realm realm;
     TextView message;
     String macAddress;
+    Context context = this;
+    String currentDateTime=null;
     public String accessToken;
 
     @Override
@@ -42,11 +44,37 @@ public class SignupActivity extends AppCompatActivity
         setContentView(R.layout.activity_realm);
         message = (TextView) findViewById(R.id.message);
         getMacAddress();
+
+        ApplicationController appController=new ApplicationController();
+        currentDateTime = appController.getDateTime();
+
+
+
+        /* initial realm */
         initRealm();
+
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                realm.delete(UserDetailsModel.class);
+//            }
+//        });
+
         realm.beginTransaction();
-        UserDetailsModel user = realm.where(UserDetailsModel.class).equalTo("id", 1).findFirst();
+
+        /*   get user details from realm table     */
+        UserDetailsModel user = realm.where(UserDetailsModel.class).equalTo("id", 2).findFirst();
         realm.commitTransaction();
+
+        /*   check user already signup or not     */
         if (user != null) {
+
+             /*  load session and store accesskey to session     */
+            SessionController session = new SessionController(context);
+            session.setAccessToken(user.getAccess_token());
+            session.setLastUpdateTime(user.getLast_update_time());
+            Log.d("user", String.valueOf(user.getLast_update_time()));
+            /*  redirect to main activity     */
             Intent in = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(in);
             finish();
@@ -72,19 +100,20 @@ public class SignupActivity extends AppCompatActivity
                             realm.executeTransaction(new Realm.Transaction() {
                                 @Override
                                 public void execute(Realm realm) {
-                                    UserDetailsModel userDetailsTable = realm.createObject(UserDetailsModel.class, 1);
+                                    UserDetailsModel userDetailsTable = realm.createObject(UserDetailsModel.class, 2);
                                     userDetailsTable.setAccess_token(accessToken);
+                                    userDetailsTable.setLast_update_time(currentDateTime);
                                 }
                             });
                         } catch (Exception e) {
                             e.printStackTrace();
                         } finally {
                             if (realm != null) {
-                                InitialSyncingController initial = new InitialSyncingController();
+                                SyncingController initial = new SyncingController();
                                 try {
                                     initial.beaconSynchronization(accessToken, getApplicationContext());
                                     initial.beaconTagSynchronization(accessToken, getApplicationContext());
-                                    initial.beaconDisplaySynchronization(accessToken, getApplicationContext());
+                                    initial.beaconDisplaySynchronization(accessToken, getApplicationContext(),"initial",null);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -105,6 +134,13 @@ public class SignupActivity extends AppCompatActivity
         realm = Realm.getDefaultInstance();
     }
 
+    /* function getMacAddress
+    * get mac address of device
+    *
+    * @param null
+    *
+    * @retun mac address
+    */
     public String getMacAddress() {
         try {
 

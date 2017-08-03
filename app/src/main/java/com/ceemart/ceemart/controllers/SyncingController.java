@@ -18,20 +18,20 @@ import org.json.JSONObject;
  * Created by jibi on 30/7/17.
  */
 
-public class InitialSyncingController {
+public class SyncingController {
 
 
     private ApiController api;
     private QueryController queryController;
 
-    /* function InitialSyncingController
+    /* function SyncingController
     * assign QueryController object
     *
     *  @param :null
     *
     *  @retun :null
     */
-    public InitialSyncingController() {
+    public SyncingController() {
         queryController = new QueryController();
         api=new ApiController();
     }
@@ -101,9 +101,13 @@ public class InitialSyncingController {
     *
     *  @retun json data
     */
-    public boolean beaconDisplaySynchronization(String token, Context applicationContext) throws JSONException {
+    public boolean beaconDisplaySynchronization(String token, Context applicationContext,String status,String ids) throws JSONException {
 
         String apiUrl = Api.BEACON_DISPLAY_LIST + token;
+        if(status!="initial"){
+            apiUrl+="&_ids="+ids;
+        }
+        Log.d("jibi",apiUrl);
         api.apiRequest(apiUrl, applicationContext, new MainActivity.VolleyCallback() {
             @Override
             public boolean onSuccessResponse(JSONObject result) {

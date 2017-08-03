@@ -13,7 +13,7 @@ public class UserDetailsModel extends RealmObject {
     @PrimaryKey
     int id;
 
-    String access_token;
+    String access_token,last_update_time;
 
     public int getId() {
         return id;
@@ -30,6 +30,15 @@ public class UserDetailsModel extends RealmObject {
     public void setAccess_token(String access_token) {
         this.access_token = access_token;
     }
+
+    public void setLast_update_time(String last_update_time) {
+        this.last_update_time = last_update_time;
+    }
+
+    public String getLast_update_time() {
+        return last_update_time;
+    }
+
 
 
 }

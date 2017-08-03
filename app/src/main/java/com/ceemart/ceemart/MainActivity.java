@@ -1,23 +1,10 @@
 package com.ceemart.ceemart;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,27 +12,22 @@ import android.widget.Toast;
 import com.ceemart.ceemart.controllers.DeviceCotroller;
 import com.ceemart.ceemart.controllers.GPSTracker;
 
-import com.ceemart.ceemart.controllers.InitialSyncingController;
-import com.ceemart.ceemart.controllers.UpdateSyncingController;
-import com.ceemart.ceemart.models.UserDetailsModel;
-import com.ceemart.ceemart.modules.signup.SignupActivity;
+import com.ceemart.ceemart.controllers.SessionController;
+import com.ceemart.ceemart.controllers.UpdateController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.NetworkInterface;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView message;
 
     DeviceCotroller deviceCntrlr;
-    Context mContext;
+    Context context = this;
     GPSTracker gps;
     String macAddress;
+    String accessToken;
+    String updateDateTime;
 
 
     Button updateGo;
@@ -57,48 +39,40 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
+        SessionController session = new SessionController(context);
+        accessToken = session.getAccessToken();
+        updateDateTime = session.getLastUpdateTime();
+        updateSyncing();
 
-        message = (TextView) findViewById(R.id.message);
-        mContext = this;
+    }
 
-        LocationAccess();
-//        getMacAddress();
+    /* function updateSyncing
+    * get update data list from server
+    *
+    * @param : Null
+    *
+    * @retun : Null
+    */
+    public void updateSyncing() {
+        final UpdateController updateController = new UpdateController();
+        try {
+            updateController.updateSyncing(accessToken, updateDateTime, getApplicationContext(), new VolleyCallback() {
+                @Override
+                public boolean onSuccessResponse(JSONObject result) {
+                    Log.d("result", String.valueOf(result));
 
-
-//        final UpdateSyncingController updateSyncingController = new UpdateSyncingController();
-////        finish();
-////        Intent homepage = new Intent(this, SignupActivity.class);
-////        startActivity(homepage);
-//
-//        updateGo = (Button) findViewById(R.id.updateGo);
-//        updateGo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                try {
-//                    updateSyncingController.updateSyncing(getApplicationContext(),new VolleyCallback() {
-//                        @Override
-//                        public boolean onSuccessResponse(JSONObject result) {
-//                            try {
-//                                String accessToken = (String) result.get("access_token");
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                            return false;
-//                        }
-//                    });
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-
-
+                    return false;
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public void LocationAccess() {
-        gps = new GPSTracker(mContext, MainActivity.this);
+        gps = new GPSTracker(context, MainActivity.this);
 
         // check if GPS enabled
         // Check if GPS enabled
@@ -126,5 +100,6 @@ public class MainActivity extends AppCompatActivity {
         boolean onSuccessResponse(JSONObject result);
 
     }
+
 
 }

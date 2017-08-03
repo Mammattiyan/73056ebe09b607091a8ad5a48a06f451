@@ -28,14 +28,14 @@ public class QueryController extends Application {
     *
     *  @retun null
     */
-    void insertJsonData(final JSONArray jsonData, final Class beaconTagModelClass) {
+    void insertJsonData(final JSONArray jsonData, final Class cemartModelClass) {
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    realm.createAllFromJson(beaconTagModelClass, jsonData);
+                    realm.createAllFromJson(cemartModelClass, jsonData);
                 }
             });
         } catch (Exception e) {
@@ -43,9 +43,9 @@ public class QueryController extends Application {
         } finally {
             if (realm != null) {
                 realm.beginTransaction();
-                RealmQuery query = realm.where(beaconTagModelClass);
+                RealmQuery query = realm.where(cemartModelClass);
                 RealmResults results = query.findAll();
-                Log.d(String.valueOf(beaconTagModelClass), results.toString());
+                Log.d(String.valueOf(cemartModelClass), results.toString());
                 realm.commitTransaction();
                 realm.close();
             }
