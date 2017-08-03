@@ -1,10 +1,12 @@
 package com.ceemart.ceemart.modules.signup;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ceemart.ceemart.MainActivity;
 import com.ceemart.ceemart.R;
@@ -35,6 +37,7 @@ public class SignupActivity extends AppCompatActivity
     TextView message;
     String macAddress;
     public String accessToken;
+    BluetoothAdapter btAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,12 @@ public class SignupActivity extends AppCompatActivity
         setContentView(R.layout.activity_realm);
         message = (TextView) findViewById(R.id.message);
         getMacAddress();
+        startBlootooh();
         initRealm();
         realm.beginTransaction();
         UserDetailsModel user = realm.where(UserDetailsModel.class).equalTo("id", 1).findFirst();
         realm.commitTransaction();
+
         if (user != null) {
             Intent in = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(in);
@@ -128,7 +133,7 @@ public class SignupActivity extends AppCompatActivity
 
                 }
                 macAddress = response.toString();
-                Log.d("mac : ", macAddress);
+                Log.d("mac address: ", macAddress);
                 return response.toString();
             }
 
@@ -136,6 +141,26 @@ public class SignupActivity extends AppCompatActivity
         }
         return "02:00:00:00:00:00";
 
+    }
+
+    public void startBlootooh(){
+
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (btAdapter == null)
+        {
+            // Device does not support Bluetooth
+            Toast.makeText(getApplicationContext(), "Device does not support bluetooth", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            if (!btAdapter.isEnabled())
+            {
+                btAdapter.enable();
+                Toast.makeText(getApplicationContext(), "Bluetooth switched ON", Toast.LENGTH_LONG).show();
+
+
+            }
+        }
     }
 
 }

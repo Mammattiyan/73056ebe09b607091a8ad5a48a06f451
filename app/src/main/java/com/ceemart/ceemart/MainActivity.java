@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             // \n is for new line
             Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
             message.setText("Late : " + latitude + "\n" + "Long : " + longitude);
-            Log.d("Late : ", "Lat :" + latitude + "\n" + "Long : " + longitude);
+            Log.d("Lat : ", "Lat :" + latitude + "\n" + "Long : " + longitude);
 
 
         } else {
