@@ -41,30 +41,30 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     TextView message;
-<<<<<<< HEAD
+
     DeviceCotroller deviceCntrlr;
     Context mContext;
     GPSTracker gps;
     String macAddress;
 
-=======
+
     Button updateGo;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 5;
->>>>>>> j0308
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
+
         message = (TextView) findViewById(R.id.message);
         mContext = this;
 
         LocationAccess();
 //        getMacAddress();
 
-=======
+
 //        final UpdateSyncingController updateSyncingController = new UpdateSyncingController();
 ////        finish();
 ////        Intent homepage = new Intent(this, SignupActivity.class);
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
->>>>>>> j0308
+
 
     }
 

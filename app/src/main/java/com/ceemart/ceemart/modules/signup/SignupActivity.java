@@ -44,10 +44,12 @@ public class SignupActivity extends AppCompatActivity
         getMacAddress();
         initRealm();
         realm.beginTransaction();
-        UserDetailsModel user = realm.where(UserDetailsModel.class).equalTo("id", 4).findFirst();
+        UserDetailsModel user = realm.where(UserDetailsModel.class).equalTo("id", 1).findFirst();
         realm.commitTransaction();
         if (user != null) {
-            Log.d("jibi", String.valueOf(user.getAccess_token()));
+            Intent in = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(in);
+            finish();
         } else {
 
             try {
@@ -70,7 +72,7 @@ public class SignupActivity extends AppCompatActivity
                             realm.executeTransaction(new Realm.Transaction() {
                                 @Override
                                 public void execute(Realm realm) {
-                                    UserDetailsModel userDetailsTable = realm.createObject(UserDetailsModel.class, 3);
+                                    UserDetailsModel userDetailsTable = realm.createObject(UserDetailsModel.class, 1);
                                     userDetailsTable.setAccess_token(accessToken);
                                 }
                             });
@@ -108,7 +110,8 @@ public class SignupActivity extends AppCompatActivity
 
             List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
             for (NetworkInterface nif : all) {
-                if (!nif.getName().equalsIgnoreCase("wlan0") || !nif.getName().equalsIgnoreCase("eth0") ) continue;
+                if (!nif.getName().equalsIgnoreCase("wlan0") || !nif.getName().equalsIgnoreCase("eth0"))
+                    continue;
 
                 byte[] macBytes = nif.getHardwareAddress();
                 if (macBytes == null) {
@@ -125,7 +128,7 @@ public class SignupActivity extends AppCompatActivity
 
                 }
                 macAddress = response.toString();
-                Log.d("mac : " , macAddress);
+                Log.d("mac : ", macAddress);
                 return response.toString();
             }
 
