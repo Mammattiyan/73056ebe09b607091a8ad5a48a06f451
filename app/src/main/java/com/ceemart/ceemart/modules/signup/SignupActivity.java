@@ -45,12 +45,24 @@ public class SignupActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_realm);
         message = (TextView) findViewById(R.id.message);
         getMacAddress();
+
         ApplicationController appController = new ApplicationController();
         currentDateTime = appController.getDateTime();
+
+//
+//
+//
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_realm);
+//        message = (TextView) findViewById(R.id.message);
+//        getMacAddress();
+//        ApplicationController appController = new ApplicationController();
+//        currentDateTime = appController.getDateTime();
 
 
         startBlootooh();
