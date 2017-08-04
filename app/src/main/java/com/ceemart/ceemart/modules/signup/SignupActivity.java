@@ -1,11 +1,15 @@
 package com.ceemart.ceemart.modules.signup;
 
+
 import android.content.Context;
+
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ceemart.ceemart.MainActivity;
 import com.ceemart.ceemart.R;
@@ -35,8 +39,9 @@ public class SignupActivity extends AppCompatActivity
     TextView message;
     String macAddress;
     Context context = this;
-    String currentDateTime=null;
+    String currentDateTime = null;
     public String accessToken;
+    BluetoothAdapter btAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +49,11 @@ public class SignupActivity extends AppCompatActivity
         setContentView(R.layout.activity_realm);
         message = (TextView) findViewById(R.id.message);
         getMacAddress();
-
-        ApplicationController appController=new ApplicationController();
+        ApplicationController appController = new ApplicationController();
         currentDateTime = appController.getDateTime();
 
 
-
+        startBlootooh();
         /* initial realm */
         initRealm();
 
@@ -66,7 +70,7 @@ public class SignupActivity extends AppCompatActivity
         UserDetailsModel user = realm.where(UserDetailsModel.class).equalTo("id", 2).findFirst();
         realm.commitTransaction();
 
-        /*   check user already signup or not     */
+/*   check user already signup or not     */
         if (user != null) {
 
              /*  load session and store accesskey to session     */
@@ -164,7 +168,7 @@ public class SignupActivity extends AppCompatActivity
 
                 }
                 macAddress = response.toString();
-                Log.d("mac : ", macAddress);
+                Log.d("mac address: ", macAddress);
                 return response.toString();
             }
 
@@ -172,6 +176,19 @@ public class SignupActivity extends AppCompatActivity
         }
         return "02:00:00:00:00:00";
 
+    }
+
+    public void startBlootooh() {
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (btAdapter == null) {
+            // Device does not support Bluetooth
+            Toast.makeText(getApplicationContext(), "Device does not support bluetooth", Toast.LENGTH_LONG).show();
+        } else {
+            if (!btAdapter.isEnabled()) {
+                btAdapter.enable();
+                Toast.makeText(getApplicationContext(), "Bluetooth switched ON", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }
