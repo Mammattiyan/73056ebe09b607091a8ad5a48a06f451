@@ -64,8 +64,8 @@ public class UpdateController {
      *  @retun :null
      */
     public boolean updateSyncing(String token, String updateDateTime, Context applicationContext, MainActivity.VolleyCallback access_token) throws JSONException {
-        accessToken=token;
-        context=applicationContext;
+        accessToken = token;
+        context = applicationContext;
         String apiUrl = Api.UPDATES + token + "&updated_date=2017-06-29 19:32:20";// + updateDateTime;
         Log.d("apiUrl", apiUrl);
         api.apiRequest(apiUrl, applicationContext, new MainActivity.VolleyCallback() {
@@ -123,17 +123,13 @@ public class UpdateController {
         Iterator<String> iterator = displayUpdates.keys();
         while (iterator.hasNext()) {
             String status = iterator.next();
-            try{
+            try {
                 JSONArray displayUpdateData = (JSONArray) displayUpdates.get(status);
                 switch (status) {
                     case "update":
-                        Log.d("displayUpdateDatakey", String.valueOf(status));
-                        Log.d("serializeJsonArray", app.serializeJsonArray(displayUpdateData));
-                        syncing.beaconDisplaySynchronization(accessToken,context,status, app.serializeJsonArray(displayUpdateData));
-
-                        break;
                     case "insert":
-
+                        accessToken += "&_ids=" + app.serializeJsonArray(displayUpdateData);
+                        syncing.beaconDisplaySynchronization(accessToken, context);
                         break;
                     case "delete":
 

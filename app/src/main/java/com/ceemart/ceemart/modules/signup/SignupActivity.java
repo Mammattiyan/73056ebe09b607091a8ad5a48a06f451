@@ -113,7 +113,7 @@ public class SignupActivity extends AppCompatActivity
                                 try {
                                     initial.beaconSynchronization(accessToken, getApplicationContext());
                                     initial.beaconTagSynchronization(accessToken, getApplicationContext());
-                                    initial.beaconDisplaySynchronization(accessToken, getApplicationContext(),"initial",null);
+                                    initial.beaconDisplaySynchronization(accessToken, getApplicationContext());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

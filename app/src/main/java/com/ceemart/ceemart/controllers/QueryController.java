@@ -28,14 +28,14 @@ public class QueryController extends Application {
     *
     *  @retun null
     */
-    void insertJsonData(final JSONArray jsonData, final Class cemartModelClass) {
+    void insertOrUpdateJsonData(final JSONArray jsonData, final Class cemartModelClass) {
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    realm.createAllFromJson(cemartModelClass, jsonData);
+                    realm.createOrUpdateAllFromJson(cemartModelClass, jsonData);
                 }
             });
         } catch (Exception e) {

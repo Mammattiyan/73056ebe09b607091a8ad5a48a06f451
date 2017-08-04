@@ -33,7 +33,7 @@ public class SyncingController {
     */
     public SyncingController() {
         queryController = new QueryController();
-        api=new ApiController();
+        api = new ApiController();
     }
 
 
@@ -53,9 +53,9 @@ public class SyncingController {
                 try {
                     beaconList = result.getJSONArray("beacon");
                     if (beaconList.length() > 0) {
-                        queryController.insertJsonData(beaconList, BeaconModel.class);
+                        queryController.insertOrUpdateJsonData(beaconList, BeaconModel.class);
+                        return true;
                     }
-                    return true;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -82,9 +82,9 @@ public class SyncingController {
                 try {
                     beaconTagList = result.getJSONArray("beacon_tag_data");
                     if (beaconTagList.length() > 0) {
-                        queryController.insertJsonData(beaconTagList, BeaconTagModel.class);
+                        queryController.insertOrUpdateJsonData(beaconTagList, BeaconTagModel.class);
+                        return true;
                     }
-                    return true;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -101,13 +101,8 @@ public class SyncingController {
     *
     *  @retun json data
     */
-    public boolean beaconDisplaySynchronization(String token, Context applicationContext,String status,String ids) throws JSONException {
-
+    public boolean beaconDisplaySynchronization(String token, Context applicationContext) throws JSONException {
         String apiUrl = Api.BEACON_DISPLAY_LIST + token;
-        if(status!="initial"){
-            apiUrl+="&_ids="+ids;
-        }
-        Log.d("jibi",apiUrl);
         api.apiRequest(apiUrl, applicationContext, new MainActivity.VolleyCallback() {
             @Override
             public boolean onSuccessResponse(JSONObject result) {
@@ -115,9 +110,9 @@ public class SyncingController {
                 try {
                     beaconDisplayList = result.getJSONArray("beacon_data");
                     if (beaconDisplayList.length() > 0) {
-                        queryController.insertJsonData(beaconDisplayList, BeaconDisplayModel.class);
+                        queryController.insertOrUpdateJsonData(beaconDisplayList, BeaconDisplayModel.class);
+                        return true;
                     }
-                    return true;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
