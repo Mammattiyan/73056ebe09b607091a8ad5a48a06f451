@@ -76,8 +76,7 @@ public class ApiController {
      * @retun json data
      */
     public JSONObject apiRequest(String apiUrl, final Context context, final MainActivity.VolleyCallback callback) throws JSONException {
-        Toast.makeText(context, "This is my Toast message!",
-                Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, "This is my Toast message!",Toast.LENGTH_LONG).show();
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 apiUrl, null, new Response.Listener<JSONObject>() {
