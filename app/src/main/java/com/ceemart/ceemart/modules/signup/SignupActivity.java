@@ -20,6 +20,7 @@ import com.ceemart.ceemart.controllers.SyncingController;
 
 import com.ceemart.ceemart.controllers.SessionController;
 import com.ceemart.ceemart.models.UserDetailsModel;
+import com.ceemart.ceemart.modules.MonitoringActivity;
 
 
 import org.json.JSONException;
@@ -91,7 +92,8 @@ public class SignupActivity extends AppCompatActivity
             session.setLastUpdateTime(user.getLast_update_time());
             Log.d("user", String.valueOf(user.getLast_update_time()));
             /*  redirect to main activity     */
-            Intent in = new Intent(getApplicationContext(), MainActivity.class);
+//            Intent in = new Intent(getApplicationContext(), MainActivity.class);
+            Intent in = new Intent(getApplicationContext(), MonitoringActivity.class);
             startActivity(in);
             finish();
         } else {

@@ -3,12 +3,11 @@
     package="com.ceemart.ceemart">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:name=".controllers.ApplicationController"
@@ -28,7 +27,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".modules.beacon.BeaconActivity"></activity>
+        <activity android:name=".modules.beacon.BeaconActivity" />
+        <activity
+            android:name=".modules.MonitoringActivity"
+            android:label="@string/title_activity_monitoring"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
