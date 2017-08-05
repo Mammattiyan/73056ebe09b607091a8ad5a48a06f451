@@ -67,8 +67,9 @@ public class MainActivity extends AppCompatActivity {
     */
     public void updateSyncing() {
         final UpdateController updateController = new UpdateController();
+
         try {
-            updateController.updateSyncing(accessToken, updateDateTime, getApplicationContext(), new VolleyCallback() {
+            updateController.updateSyncing("123", updateDateTime, getApplicationContext(), new VolleyCallback() {
                 @Override
                 public boolean onSuccessResponse(JSONObject result) {
                     Log.d("result", String.valueOf(result));

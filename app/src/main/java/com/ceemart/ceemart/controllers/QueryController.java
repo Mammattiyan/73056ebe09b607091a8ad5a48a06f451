@@ -5,11 +5,13 @@ import android.util.Log;
 
 import com.ceemart.ceemart.MainActivity;
 import com.ceemart.ceemart.models.BeaconModel;
+import com.ceemart.ceemart.models.UserDetailsModel;
 
 import org.json.JSONArray;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
@@ -46,6 +48,41 @@ public class QueryController extends Application {
                 RealmQuery query = realm.where(cemartModelClass);
                 RealmResults results = query.findAll();
                 Log.d(String.valueOf(cemartModelClass), results.toString());
+                realm.commitTransaction();
+                realm.close();
+            }
+        }
+    }
+
+    /* function deleteRowById
+    * delete row from realm table
+    *
+    *  @param :rowId,modelclass
+    *
+    *  @retun null
+    */
+    void deleteRowById(Integer rowId, final Class cemartModelClass) {
+        Realm realm = null;
+        try {
+            realm = Realm.getDefaultInstance();
+            final RealmObject query = (RealmObject) realm.where(cemartModelClass).equalTo("id", rowId).findFirst();
+            if (query != null) {
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        query.deleteFromRealm();
+                    }
+                });
+            } else {
+                Log.d(String.valueOf(cemartModelClass), "record not found");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (realm != null) {
+                realm.beginTransaction();
+                RealmQuery query = realm.where(cemartModelClass);
+                RealmResults results = query.findAll();
                 realm.commitTransaction();
                 realm.close();
             }

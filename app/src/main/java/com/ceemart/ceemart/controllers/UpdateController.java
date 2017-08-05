@@ -132,7 +132,10 @@ public class UpdateController {
                         syncing.beaconDisplaySynchronization(accessToken, context);
                         break;
                     case "delete":
-
+                        Log.d("delete", String.valueOf(displayUpdateData));
+                        for (int i = 0; i < displayUpdateData.length(); i++) {
+                            queryController.deleteRowById(6, BeaconDisplayModel.class);
+                        }
                         break;
                     default:
                 }
@@ -151,8 +154,29 @@ public class UpdateController {
      *
      *  @retun :null
      */
-    public void beaconSyncing(Object beaconUpdates) {
-
+    public void beaconSyncing(JSONObject beaconUpdates) {
+        Iterator<String> iterator = beaconUpdates.keys();
+        while (iterator.hasNext()) {
+            String status = iterator.next();
+            try {
+                JSONArray beaconUpdateData = (JSONArray) beaconUpdates.get(status);
+                switch (status) {
+                    case "update":
+                    case "insert":
+                        accessToken += "&_ids=" + app.serializeJsonArray(beaconUpdateData);
+                        syncing.beaconSynchronization(accessToken, context);
+                        break;
+                    case "delete":
+                        for (int i = 0; i < beaconUpdateData.length(); i++) {
+                            queryController.deleteRowById(6, BeaconModel.class);
+                        }
+                        break;
+                    default:
+                }
+            } catch (JSONException e) {
+                // Something went wrong!
+            }
+        }
     }
 
     /* function beaconTagSyncing
@@ -162,7 +186,29 @@ public class UpdateController {
      *
      *  @retun :null
      */
-    public void beaconTagSyncing(Object beaconTagUpdates) {
-
+    public void beaconTagSyncing(JSONObject beaconTagUpdates) {
+        Log.d("beaconUpdates", String.valueOf(beaconTagUpdates));
+        Iterator<String> iterator = beaconTagUpdates.keys();
+        while (iterator.hasNext()) {
+            String status = iterator.next();
+            try {
+                JSONArray beaconTagUpdateData = (JSONArray) beaconTagUpdates.get(status);
+                switch (status) {
+                    case "update":
+                    case "insert":
+                        accessToken += "&_ids=" + app.serializeJsonArray(beaconTagUpdateData);
+                        syncing.beaconTagSynchronization(accessToken, context);
+                        break;
+                    case "delete":
+                        for (int i = 0; i < beaconTagUpdateData.length(); i++) {
+                            queryController.deleteRowById(6, BeaconTagModel.class);
+                        }
+                        break;
+                    default:
+                }
+            } catch (JSONException e) {
+                // Something went wrong!
+            }
+        }
     }
 }
