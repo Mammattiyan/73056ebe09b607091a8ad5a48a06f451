@@ -8,6 +8,10 @@ import com.ceemart.ceemart.models.BeaconModel;
 import com.ceemart.ceemart.models.UserDetailsModel;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -22,6 +26,7 @@ import io.realm.RealmResults;
 public class QueryController extends Application {
 
     private Realm realm;
+    protected static final String TAG = "QueryController";
 
     /* function insertJsonData
     * insert JSON data to realm tables
@@ -87,5 +92,45 @@ public class QueryController extends Application {
                 realm.close();
             }
         }
+    }
+
+    /* function selectQuery
+    * select row from realm table
+    *
+    *  @param :model and where
+    *
+    *  @retun null
+    */
+    public void selectQuery(Map<String, String> whereMap, final Class cemartModelClass, RealmCallback realmCallback) {
+        Log.d(TAG, String.valueOf(whereMap));
+        Realm realm = null;
+        try {
+            realm = Realm.getDefaultInstance();
+            RealmQuery query = realm.where(cemartModelClass);
+            for (Map.Entry<String, String> entry : whereMap.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                query.equalTo(key, value);
+            }
+            RealmResults results = query.findAll();
+            realmCallback.onSuccessResponse(results);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+        }
+    }
+
+    /* interface RealmCallback
+    *  callback function for realm
+    *
+    *  @param :
+    *
+    *  @retun
+    */
+    public interface RealmCallback {
+        boolean onSuccessResponse(RealmResults result);
     }
 }

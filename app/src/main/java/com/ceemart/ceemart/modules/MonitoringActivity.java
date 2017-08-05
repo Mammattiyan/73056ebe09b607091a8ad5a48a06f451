@@ -10,20 +10,35 @@ import android.util.Log;
 import android.view.View;
 
 import com.ceemart.ceemart.R;
+import com.ceemart.ceemart.controllers.BeaconController;
 
+import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.MonitorNotifier;
+import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class MonitoringActivity extends AppCompatActivity implements BeaconConsumer {
     protected static final String TAG = "Jibi";
     private BeaconManager beaconManager;
+    private BeaconController beaconController;
+    private BackgroundPowerSaver backgroundPowerSaver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring);
+//        backgroundPowerSaver = new BackgroundPowerSaver(this);
+        search();
+    }
+
+    public void search() {
         beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.bind(this);
     }
@@ -33,28 +48,53 @@ public class MonitoringActivity extends AppCompatActivity implements BeaconConsu
         super.onDestroy();
         beaconManager.unbind(this);
     }
+
     @Override
     public void onBeaconServiceConnect() {
-        beaconManager.addMonitorNotifier(new MonitorNotifier() {
+        beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
-            public void didEnterRegion(Region region) {
-                Log.i(TAG, "I just saw an beacon for the first time!");
-            }
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                BeaconController beaconController = new BeaconController();
+                if (beacons.size() > 0) {
+                    Log.i(TAG, "The first beacon I see is about " + beacons.iterator().next().getDistance() + " meters away.");
 
-            @Override
-            public void didExitRegion(Region region) {
-                Log.i(TAG, "I no longer see an beacon");
-            }
-
-            @Override
-            public void didDetermineStateForRegion(int state, Region region) {
-                Log.i(TAG, "I have just switched from seeing/not seeing beacons: "+state);
+                    Log.i(TAG, "Beacon found ");
+//                    beaconController.beaconMacthing(beacons);
+                    beaconController.beaconMacthingTest(beacons);
+                } else {
+                    beaconController.beaconMacthingTest(beacons);
+                    Log.i(TAG, "No beacon ");
+                }
             }
         });
 
         try {
-            beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
-        } catch (RemoteException e) {    }
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+        } catch (RemoteException e) {
+        }
     }
+
+//    @Override
+//    public void onBeaconServiceConnect() {
+//        beaconManager.addRangeNotifier(new RangeNotifier() {
+//            @Override
+//            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+//                BeaconController beaconController = new BeaconController();
+//                Log.i(TAG, "The first beacon I see is about "+beacons.iterator().next()+" meters away.");
+//                if (beacons.size() > 0) {
+//                    Log.i(TAG, "Beacon found ");
+//                    beaconController.beaconMacthing(beacons);
+//                } else {
+//                    beaconController.beaconMacthingTest();
+//                    Log.i(TAG, "No beacon ");
+//                }
+//            }
+//        });
+//        Log.i(TAG, "T******** ");
+//        try {
+//            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+//        } catch (RemoteException e) {
+//        }
+//    }
 
 }
