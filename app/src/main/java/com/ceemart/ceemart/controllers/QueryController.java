@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.ceemart.ceemart.MainActivity;
+import com.ceemart.ceemart.models.BeaconDisplayModel;
 import com.ceemart.ceemart.models.BeaconModel;
 import com.ceemart.ceemart.models.UserDetailsModel;
 
@@ -110,7 +111,11 @@ public class QueryController extends Application {
             for (Map.Entry<String, String> entry : whereMap.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
-                query.equalTo(key, value);
+                if (key == "id") {
+                    query.equalTo(key, Integer.parseInt(value));
+                } else {
+                    query.equalTo(key, value);
+                }
             }
             RealmResults results = query.findAll();
             realmCallback.onSuccessResponse(results);
@@ -121,6 +126,25 @@ public class QueryController extends Application {
                 realm.close();
             }
         }
+    }
+
+    public void getNotificationMessages(Map<String, String> whereData, final Class cemartModelClass, RealmCallback realmCallback) {
+        Log.d(TAG, String.valueOf(whereData));
+        try {
+            realm = Realm.getDefaultInstance();
+            RealmQuery query = realm.where(cemartModelClass);
+            query.equalTo("beacon_id", Integer.parseInt(whereData.get("beacon_id")));
+            query.equalTo("status", 1);
+            RealmResults results = query.findAll();
+            realmCallback.onSuccessResponse(results);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+        }
+
     }
 
     /* interface RealmCallback

@@ -40,7 +40,7 @@ dependencies {
 //    compile "com.google.firebase:firebase-auth:9.0.2"
 
     //AltBeacon
-    compile 'org.altbeacon:android-beacon-library:2+'
+    compile 'org.altbeacon:android-beacon-library:2.+'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
