@@ -11,10 +11,14 @@ import android.view.View;
 
 import com.ceemart.ceemart.R;
 
+import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.MonitorNotifier;
+import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+
+import java.util.Collection;
 
 public class MonitoringActivity extends AppCompatActivity implements BeaconConsumer {
     protected static final String TAG = "Jibi";
@@ -33,27 +37,20 @@ public class MonitoringActivity extends AppCompatActivity implements BeaconConsu
         super.onDestroy();
         beaconManager.unbind(this);
     }
+
     @Override
     public void onBeaconServiceConnect() {
-        beaconManager.addMonitorNotifier(new MonitorNotifier() {
+        beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
-            public void didEnterRegion(Region region) {
-                Log.i(TAG, "I just saw an beacon for the first time!");
-            }
-
-            @Override
-            public void didExitRegion(Region region) {
-                Log.i(TAG, "I no longer see an beacon");
-            }
-
-            @Override
-            public void didDetermineStateForRegion(int state, Region region) {
-                Log.i(TAG, "I have just switched from seeing/not seeing beacons: "+state);
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                if (beacons.size() > 0) {
+                    Log.i(TAG, "The first beacon I see is about "+beacons+" meters away.");
+                }
             }
         });
-
+        Log.i(TAG, "T******** ");
         try {
-            beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (RemoteException e) {    }
     }
 

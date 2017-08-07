@@ -27,10 +27,11 @@ import org.json.JSONObject;
 import java.nio.ByteBuffer;
 import java.util.UUID;
 
+import io.realm.Realm;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView message;
-
     DeviceCotroller deviceCntrlr;
     Context context = this;
     GPSTracker gps;
@@ -38,10 +39,9 @@ public class MainActivity extends AppCompatActivity {
     String accessToken;
     String updateDateTime;
     BeaconSearch beaconSearch;
-
-
     Button updateGo;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 5;
+    Realm realm;
 
 
     @Override
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         updateDateTime = session.getLastUpdateTime();
         BeaconSearch beaconSearch = new BeaconSearch();
         updateSyncing();
+        realm.beginTransaction();
 
     }
 
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     public void LocationAccess() {
         gps = new GPSTracker(context, MainActivity.this);
