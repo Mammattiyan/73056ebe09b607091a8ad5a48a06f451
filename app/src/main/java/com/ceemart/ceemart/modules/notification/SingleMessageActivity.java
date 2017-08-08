@@ -14,12 +14,13 @@ import com.ceemart.ceemart.models.BeaconDisplayModel;
 
 import java.util.HashMap;
 
+import io.realm.Realm;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
 
 public class SingleMessageActivity extends AppCompatActivity {
 
     QueryController queryController;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +28,12 @@ public class SingleMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            HashMap<String, String> beaconMap = new HashMap<String, String>();
-            beaconMap.put("id", extras.getString("messageId"));
-            queryController.selectQuery(beaconMap, BeaconDisplayModel.class, new QueryController.RealmCallback() {
+            String rowId = extras.getString("messageId");
+            queryController.selectById(rowId, BeaconDisplayModel.class, new QueryController.RealmModelCallback() {
                 @Override
-                public boolean onSuccessResponse(RealmResults result) {
-                    Log.i("jibiExtra:", String.valueOf(result));
+                public boolean onSuccessObjectResponse(RealmModel model) {
+                    BeaconDisplayModel obj = (BeaconDisplayModel) model;
+                    Log.d("modeljibi", obj.getName());
                     return false;
                 }
             });
