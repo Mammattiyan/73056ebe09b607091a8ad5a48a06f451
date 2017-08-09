@@ -2,15 +2,9 @@ package com.ceemart.ceemart.controllers;
 
 import android.app.Application;
 import android.util.Log;
-
-import com.ceemart.ceemart.MainActivity;
-import com.ceemart.ceemart.models.BeaconModel;
-import com.ceemart.ceemart.models.UserDetailsModel;
-
 import org.json.JSONArray;
-
+import java.util.Map;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -22,6 +16,7 @@ import io.realm.RealmResults;
 public class QueryController extends Application {
 
     private Realm realm;
+    protected static final String TAG = "QueryController";
 
     /* function insertJsonData
     * insert JSON data to realm tables
@@ -87,5 +82,68 @@ public class QueryController extends Application {
                 realm.close();
             }
         }
+    }
+
+    /* function selectQuery
+    * select row from realm table
+    *
+    *  @param :model and where
+    *
+    *  @retun null
+    */
+    public void selectQuery(Map<String, String> whereMap, final Class cemartModelClass, RealmCallback realmCallback) {
+        Log.d(TAG, String.valueOf(whereMap));
+        Realm realm = null;
+        try {
+            realm = Realm.getDefaultInstance();
+            RealmQuery query = realm.where(cemartModelClass);
+            for (Map.Entry<String, String> entry : whereMap.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (key == "id") {
+                    query.equalTo(key, Integer.parseInt(value));
+                } else {
+                    query.equalTo(key, value);
+                }
+            }
+            RealmResults results = query.findAll();
+            realmCallback.onSuccessResponse(results);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+        }
+    }
+
+    public void getNotificationMessages(Map<String, String> whereData, final Class cemartModelClass, RealmCallback realmCallback) {
+        Log.d(TAG, String.valueOf(whereData));
+        try {
+            realm = Realm.getDefaultInstance();
+            RealmQuery query = realm.where(cemartModelClass);
+            query.equalTo("beacon_id", Integer.parseInt(whereData.get("beacon_id")));
+            query.equalTo("status", 1);
+            RealmResults results = query.findAll();
+            realmCallback.onSuccessResponse(results);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+        }
+
+    }
+
+    /* interface RealmCallback
+    *  callback function for realm
+    *
+    *  @param :
+    *
+    *  @retun
+    */
+    public interface RealmCallback {
+        boolean onSuccessResponse(RealmResults result);
     }
 }

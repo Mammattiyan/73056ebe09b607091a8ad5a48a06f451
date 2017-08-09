@@ -31,6 +31,10 @@
         <activity
             android:name=".modules.MonitoringActivity"
             android:label="@string/title_activity_monitoring"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".modules.notification.SingleMessageActivity"
+            android:label="@string/title_activity_single_message"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

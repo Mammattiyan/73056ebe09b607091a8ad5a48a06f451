@@ -1,33 +1,37 @@
 package com.ceemart.ceemart.helper;
 
-import android.annotation.TargetApi;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
+import android.app.Application;
 import android.content.Context;
-import android.os.Build;
+import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.util.Log;
 
+import com.ceemart.ceemart.R;
+
+import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
+
+import java.util.Collection;
 
 /**
  * Created by achu on 3/8/17.
  */
 
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-public class BeaconSearch extends AppCompatActivity implements BeaconConsumer{
-
-    Context context = this;
-    Integer dis;
-
-
-    @Override
-    public void onBeaconServiceConnect() {
-
+public class BeaconSearch extends Application implements BeaconConsumer {
+    protected static final String TAG = "Jibi";
+    private BeaconManager beaconManager;
+    public void search() {
+        Log.i(TAG, "****BeaconSearch**** ");
+        beaconManager = BeaconManager.getInstanceForApplication(this);
+        beaconManager.bind(this);
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
+    public void onBeaconServiceConnect() {
+        Log.i(TAG, "****BeaconSearchonBeaconServiceConnect**** ");
     }
 }
