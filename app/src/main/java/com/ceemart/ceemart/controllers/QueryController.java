@@ -5,6 +5,8 @@ import android.util.Log;
 import org.json.JSONArray;
 import java.util.Map;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmModel;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -117,6 +119,29 @@ public class QueryController extends Application {
         }
     }
 
+    /* function selectById
+    * select row from realm table by id
+    *
+    *  @param :model and where
+    *
+    *  @retun null
+    */
+    public void selectById(String rowId, final Class cemartModelClass, RealmModelCallback realmCallback) {
+        Log.d(TAG, String.valueOf(rowId));
+        Realm realm = null;
+        try {
+            realm = Realm.getDefaultInstance();
+            RealmModel model = realm.where(cemartModelClass).equalTo("id", Integer.parseInt(rowId)).findFirst();
+            realmCallback.onSuccessObjectResponse(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+        }
+    }
+
     public void getNotificationMessages(Map<String, String> whereData, final Class cemartModelClass, RealmCallback realmCallback) {
         Log.d(TAG, String.valueOf(whereData));
         try {
@@ -146,4 +171,16 @@ public class QueryController extends Application {
     public interface RealmCallback {
         boolean onSuccessResponse(RealmResults result);
     }
+
+    /* interface RealmModelCallback
+    *  callback function for realm
+    *
+    *  @param :
+    *
+    *  @retun
+    */
+    public interface RealmModelCallback {
+        boolean onSuccessObjectResponse(RealmModel model);
+    }
+
 }

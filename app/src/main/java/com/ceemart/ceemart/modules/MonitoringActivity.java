@@ -8,6 +8,8 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.ceemart.ceemart.For_xml;
 import com.ceemart.ceemart.R;
 import com.ceemart.ceemart.controllers.BeaconController;
 import com.ceemart.ceemart.models.BeaconDisplayModel;
