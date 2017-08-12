@@ -121,5 +121,32 @@ public class SyncingController {
         });
         return false;
     }
+    /* function beaconMediaListSynchronization
+    * get all beacon media list details from ceemart
+    *
+    *  @param :token,Context
+    *
+    *  @retun json data
+    */
+    public boolean beaconMediaListSynchronization(String token, Context applicationContext) throws JSONException {
+        String apiUrl = Api.BEACON_DISPLAY_LIST + token;
+        api.apiRequest(apiUrl, applicationContext, new MainActivity.VolleyCallback() {
+            @Override
+            public boolean onSuccessResponse(JSONObject result) {
+                JSONArray beaconDisplayList = new JSONArray();
+                try {
+                    beaconDisplayList = result.getJSONArray("beacon_media_data");
+                    if (beaconDisplayList.length() > 0) {
+                        queryController.insertOrUpdateJsonData(beaconDisplayList, BeaconDisplayModel.class);
+                        return true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
+        return false;
+    }
 
 }

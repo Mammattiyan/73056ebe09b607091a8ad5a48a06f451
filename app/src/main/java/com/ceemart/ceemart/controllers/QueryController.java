@@ -151,7 +151,13 @@ public class QueryController extends Application {
             }
         }
     }
-
+    /* interface getNotificationMessages
+    *  callback function for realm
+    *
+    *  @param : whereData model class and callback function
+    *
+    *  @retun
+    */
     public void getNotificationMessages(Map<String, String> whereData, final Class cemartModelClass, RealmCallback realmCallback) {
         Log.d(TAG, String.valueOf(whereData));
         try {

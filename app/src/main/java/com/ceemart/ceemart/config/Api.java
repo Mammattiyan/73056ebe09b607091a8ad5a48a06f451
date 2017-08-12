@@ -36,6 +36,10 @@ public class Api {
      *  beacon display list api url
      */
     public static final String UPDATES = BASE_URL + "/update1?access_key=";
+    /*
+     *  beacon display list api url
+     */
+    public static final String BEACON_MEDIA_LIST = BASE_URL + "/beaconmedialist?access_key=";
 
 
 }
