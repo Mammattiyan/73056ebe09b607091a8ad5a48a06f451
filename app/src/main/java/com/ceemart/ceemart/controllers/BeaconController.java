@@ -64,7 +64,7 @@ public class BeaconController {
                         beaconMap.put("distance", "2");
 //                        beaconMap.put("distance", String.valueOf(beacons.iterator().next().getDistance()));
                         NotificationController notification=new NotificationController();
-                        notification.notifyMeesages(beaconMap,notificationCallback);
+                        notification.notifyMesages(beaconMap,notificationCallback);
                     }
                 }
                 return false;

@@ -39,7 +39,7 @@ public class NotificationController {
     *
     *  @retun null
     */
-    public void notifyMeesages(Map<String, String> beaconMap, final MonitoringActivity.NotificationCallback notificationCallback) {
+    public void notifyMesages(Map<String, String> beaconMap, final MonitoringActivity.NotificationCallback notificationCallback) {
         Log.d(TAG, String.valueOf(beaconMap));
 
         queryController.getNotificationMessages(beaconMap, BeaconDisplayModel.class, new QueryController.RealmCallback() {

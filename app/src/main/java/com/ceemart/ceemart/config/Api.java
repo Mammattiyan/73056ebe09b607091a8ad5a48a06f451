@@ -31,7 +31,18 @@ public class Api {
     /*
      *  beacon display list api url
      */
-    public static final String BEACON_DISPLAY_LIST = BASE_URL + "/beacondisplaylist2?access_key=";
+    public static final String BEACON_DISPLAY_LIST = BASE_URL + "/beacondisplaylist3?access_key=";
+
+    /*
+     *  beacon media list api url
+     */
+    public static final String BEACON_MEDIA= BASE_URL + "/beaconmedialist?access_key=";
+
+    /*
+    *  beacon timeframe list api url
+    */
+    public static final String BEACON_TIMEFRAME = BASE_URL + "/beacontimeframelist?access_key=";
+
     /*
      *  beacon display list api url
      */

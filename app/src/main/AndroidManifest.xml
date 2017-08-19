@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/MyMaterialTheme">
         <activity
             android:name=".modules.signup.SignupActivity"
             android:label="@string/app_name">
@@ -36,7 +36,11 @@
             android:name=".modules.notification.SingleMessageActivity"
             android:label="@string/title_activity_single_message"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".For_xml"></activity>
+        <activity android:name=".For_xml" />
+        <activity
+            android:name=".modules.notification.MessageListActivity"
+            android:label="@string/title_activity_message_list"
+            android:theme="@style/MyMaterialTheme"></activity>
     </application>
 
 </manifest>

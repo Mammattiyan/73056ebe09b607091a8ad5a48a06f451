@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.ceemart.ceemart.MainActivity;
 import com.ceemart.ceemart.config.Api;
+import com.ceemart.ceemart.models.BeaconMediaModel;
 import com.ceemart.ceemart.models.BeaconModel;
 import com.ceemart.ceemart.models.UserDetailsModel;
 
@@ -92,6 +93,9 @@ public class UpdateController {
                                     break;
                                 case "tag":
                                     beaconTagSyncing(updateData);
+                                    break;
+                                case "media":
+                                    beaconMediaSyncing(updateData);
                                     break;
                                 default:
                             }
@@ -202,6 +206,39 @@ public class UpdateController {
                     case "delete":
                         for (int i = 0; i < beaconTagUpdateData.length(); i++) {
                             queryController.deleteRowById(6, BeaconTagModel.class);
+                        }
+                        break;
+                    default:
+                }
+            } catch (JSONException e) {
+                // Something went wrong!
+            }
+        }
+    }
+
+    /* function beaconMediaSyncing
+     * get beacon media updates from server
+     *
+     *  @param :beaconMediaUpdates
+     *
+     *  @retun :null
+     */
+    public void beaconMediaSyncing(JSONObject beaconTagUpdates) {
+        Log.d("beaconUpdates", String.valueOf(beaconTagUpdates));
+        Iterator<String> iterator = beaconTagUpdates.keys();
+        while (iterator.hasNext()) {
+            String status = iterator.next();
+            try {
+                JSONArray beaconTagUpdateData = (JSONArray) beaconTagUpdates.get(status);
+                switch (status) {
+                    case "update":
+                    case "insert":
+                        accessToken += "&_ids=" + app.serializeJsonArray(beaconTagUpdateData);
+                        syncing.beaconMediaSynchronization(accessToken, context);
+                        break;
+                    case "delete":
+                        for (int i = 0; i < beaconTagUpdateData.length(); i++) {
+                            queryController.deleteRowById(6, BeaconMediaModel.class);
                         }
                         break;
                     default:

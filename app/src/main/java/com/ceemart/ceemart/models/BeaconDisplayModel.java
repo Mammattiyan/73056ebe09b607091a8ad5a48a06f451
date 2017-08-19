@@ -11,8 +11,8 @@ public class BeaconDisplayModel extends RealmObject {
 
     @PrimaryKey
     private int id;
-    int beacon_id,type,pushtype,image_display, show_type,distance,display_time,status;
-    private String name,tag,title,content,image,video,audio,from_time,to_time;
+    int beacon_id, type, pushtype, image_display, show_type, distance, display_time, status, timeframe;
+    private String name, tag, title, content, image, video, audio, from_time, to_time;
 
     public int getId() {
         return id;
@@ -20,6 +20,14 @@ public class BeaconDisplayModel extends RealmObject {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getTimeframe() {
+        return timeframe;
+    }
+
+    public void setTimeframe(int timeframe) {
+        this.timeframe = timeframe;
     }
 
     public int getBeacon_id() {

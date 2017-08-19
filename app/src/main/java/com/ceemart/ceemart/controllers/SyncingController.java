@@ -6,8 +6,10 @@ import android.util.Log;
 import com.ceemart.ceemart.MainActivity;
 import com.ceemart.ceemart.config.Api;
 import com.ceemart.ceemart.models.BeaconDisplayModel;
+import com.ceemart.ceemart.models.BeaconMediaModel;
 import com.ceemart.ceemart.models.BeaconModel;
 import com.ceemart.ceemart.models.BeaconTagModel;
+import com.ceemart.ceemart.models.BeaconTimeframeModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,6 +113,62 @@ public class SyncingController {
                     beaconDisplayList = result.getJSONArray("beacon_data");
                     if (beaconDisplayList.length() > 0) {
                         queryController.insertOrUpdateJsonData(beaconDisplayList, BeaconDisplayModel.class);
+                        return true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
+        return false;
+    }
+
+    /* function beaconTimeframeSynchronization
+    * get all beacon timeframe details from ceemart
+    *
+    *  @param :token,Context
+    *
+    *  @retun json data
+    */
+    public boolean beaconTimeframeSynchronization(String token, Context applicationContext) throws JSONException {
+        String apiUrl = Api.BEACON_TIMEFRAME + token;
+        api.apiRequest(apiUrl, applicationContext, new MainActivity.VolleyCallback() {
+            @Override
+            public boolean onSuccessResponse(JSONObject result) {
+                JSONArray booleanTimeFrameList = new JSONArray();
+                try {
+                    booleanTimeFrameList = result.getJSONArray("beacon_timeframe_data");
+                    if (booleanTimeFrameList.length() > 0) {
+                        queryController.insertOrUpdateJsonData(booleanTimeFrameList, BeaconTimeframeModel.class);
+                        return true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
+        return false;
+    }
+
+    /* function beaconMediaSynchronization
+    * get all beacon media details from ceemart
+    *
+    *  @param :token,Context
+    *
+    *  @retun json data
+    */
+    public boolean beaconMediaSynchronization(String token, Context applicationContext) throws JSONException {
+        String apiUrl = Api.BEACON_MEDIA+ token;
+        api.apiRequest(apiUrl, applicationContext, new MainActivity.VolleyCallback() {
+            @Override
+            public boolean onSuccessResponse(JSONObject result) {
+                JSONArray booleanMediaList = new JSONArray();
+                try {
+                    booleanMediaList = result.getJSONArray("beacon_media_data");
+                    if (booleanMediaList.length() > 0) {
+                        queryController.insertOrUpdateJsonData(booleanMediaList, BeaconMediaModel.class);
                         return true;
                     }
                 } catch (JSONException e) {

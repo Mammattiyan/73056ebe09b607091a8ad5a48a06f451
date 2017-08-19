@@ -1,10 +1,5 @@
 package com.ceemart.ceemart;
 
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanFilter;
-import android.bluetooth.le.ScanRecord;
-import android.bluetooth.le.ScanResult;
-import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,13 +14,10 @@ import com.ceemart.ceemart.controllers.GPSTracker;
 
 import com.ceemart.ceemart.controllers.SessionController;
 import com.ceemart.ceemart.controllers.UpdateController;
-import com.ceemart.ceemart.helper.BeaconSearch;
+import com.ceemart.ceemart.adapter.BeaconSearch;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.nio.ByteBuffer;
-import java.util.UUID;
 
 import io.realm.Realm;
 
